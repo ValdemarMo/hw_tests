@@ -9,16 +9,12 @@ ids = {'user1': [213, 213, 213, 15, 213],
 print(f'список:\n')
 for user, geo_user_set in ids.items():
         print (f'{user} : {geo_user_set}')
+def unical_id(set_x):
+    geo_set = []
+    for geo_user_set in set_x.values():
+        geo_set += geo_user_set
+    geo_set = set(geo_set)
+    return geo_set
 
-# вариант 1
-geo_set = []
-for geo_user_set in ids.values():
-    geo_set += geo_user_set
-geo_set = set(geo_set)
-
-# вариант 2
-# geo_set = set()
-# for geo_user_set in ids.values():
-#     geo_set = geo_set | set(geo_user_set)
-
-print(f'\nуникальные гео-ID:\n\n{list(geo_set)}')
+x = unical_id(ids)
+print(f'\nуникальные гео-ID:\n\n{list(x)}')

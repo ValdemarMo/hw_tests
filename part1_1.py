@@ -18,14 +18,17 @@ print(f'список:\n')
 for visits in geo_logs:
     print(visits)
 
-country_filter = input(f'\nвведите страну: ').lower()
+c_filter = 'Россия'
+def country_filter(self, geo_logs, filter):
+    filtered_logs = []
+    for visits in geo_logs:
+        for city, country in visits.values():
+            if country == filter:
+                filtered_logs.append(visits)
 
-filtered_logs = []
-for visits in geo_logs:
-    for city, country in visits.values():
-        if country.lower() == country_filter:
-            filtered_logs.append(visits)
+print(country_filter(geo_logs, c_filter))
 
 print(f'\nобновленный список:\n')
-for visits in filtered_logs:
+for visits in country_filter(geo_logs, filter):
     print(visits)
+
