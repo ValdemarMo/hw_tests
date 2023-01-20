@@ -2,6 +2,8 @@ from unittest import TestCase
 from part1_1 import country_filter
 from part1_2 import unical_id
 from part1_3 import max_stats
+from libX1.y import token
+from part2 import YaUploader
 
 class TestCountryFilter(TestCase):
     def test_country_filter(self):
@@ -53,3 +55,31 @@ class TestMaxStats(TestCase):
 
         res = max_stats(stats)
         self.assertEqual(res, cx)
+
+class TestYaFolder(TestCase):
+
+    def test_create_folder(self):
+        folder = 'test_x'
+        yadisk = YaUploader(token)
+        res = yadisk.create_folder(folder)
+        self.assertEqual(res, 201)
+        print(f'папка {folder} создана')
+
+    def test_create_twice(self):
+        folder = 'test_x'
+        yadisk = YaUploader(token)
+        res = yadisk.create_folder(folder)
+        self.assertNotEqual(res, 201)
+        print(f'папка {folder} повторно не создается (создалась ранее)')
+
+    def test_request_folder(self):
+        folder = 'test_x'
+        yadisk = YaUploader(token)
+        res = yadisk.request_folder(folder)
+        self.assertEqual(res, 200)
+        print(f'папка {folder} существует')
+        res = yadisk.del_folder(folder)
+        if res == 202:
+            print(f'папка не пустая {folder} поставлена в очередь на удаление')
+        if res == 204:
+            print(f'папка {folder} удалена')
