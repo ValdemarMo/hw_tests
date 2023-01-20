@@ -56,7 +56,13 @@ class TestMaxStats(TestCase):
         res = max_stats(stats)
         self.assertEqual(res, cx)
 
-class TestYaFolder(TestCase):
+class TestYaFolder(unittest.TestCase):
+
+    # def setUp(self):
+    #     print("method setUp")
+    #
+    # def tearDown(self):
+    #     print("method tearDown")
 
     def test_create_folder(self):
         folder = 'test_x'
@@ -65,12 +71,28 @@ class TestYaFolder(TestCase):
         self.assertEqual(res, 201)
         print(f'папка {folder} создана')
 
+    @unittest.skip('негативный аналог на повторное создание есть ниже')
     def test_create_twice(self):
+        folder = 'test_x'
+        yadisk = YaUploader(token)
+        res = yadisk.create_folder(folder)
+        self.assertEqual(res, 409)
+        print(f'папка {folder} повторно не создается (создалась ранее)')
+
+    def test_create_twice_not(self):
         folder = 'test_x'
         yadisk = YaUploader(token)
         res = yadisk.create_folder(folder)
         self.assertNotEqual(res, 201)
         print(f'папка {folder} повторно не создается (создалась ранее)')
+
+    @unittest.expectedFailure
+    def test_create_digital_name(self):
+        folder = 43
+        yadisk = YaUploader(token)
+        res = yadisk.create_folder(folder)
+        print(f'название папки {folder} - в цифровом формате')
+        self.assertEqual(res, 201)
 
     def test_request_folder(self):
         folder = 'test_x'
